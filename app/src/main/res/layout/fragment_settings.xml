@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.settings.SettingsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <!-- Biometrics -->
+
+            <LinearLayout
+                style="@style/SettingsGroup"
+                android:id="@+id/biometrics_group"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    style="@style/SettingsGroupHeading"
+                    android:id="@+id/biometrics_heading"
+                    android:text="@string/settings_header_biometrics" />
+
+                <!-- Activity Level -->
+
+                <LinearLayout
+                    style="@style/SettingsGroupRow">
+
+                    <TextView
+                        style="@style/SettingsItem.Label"
+                        android:id="@+id/activity_label"
+                        android:text="@string/settings_label_activity" />
+
+                    <Space style="@style/SettingsItem.Spacer" />
+
+                    <TextView
+                        style="@style/SettingsItem.Value"
+                        android:id="@+id/activity_text_view" />
+
+                </LinearLayout>
+
+                <!-- Age -->
+
+                <LinearLayout
+                    style="@style/SettingsGroupRow">
+
+                    <TextView
+                        style="@style/SettingsItem.Label"
+                        android:id="@+id/age_label"
+                        android:text="@string/settings_label_age" />
+
+                    <Space style="@style/SettingsItem.Spacer" />
+
+                    <TextView
+                        style="@style/SettingsItem.Value"
+                        android:id="@+id/age_text_view" />
+
+                </LinearLayout>
+
+                <!-- Height -->
+
+                <LinearLayout
+                    style="@style/SettingsGroupRow">
+
+                    <TextView
+                        style="@style/SettingsItem.Label"
+                        android:id="@+id/height_label"
+                        android:text="@string/settings_label_height" />
+
+                    <Space style="@style/SettingsItem.Spacer" />
+
+                    <TextView
+                        style="@style/SettingsItem.Value"
+                        android:id="@+id/height_text_view" />
+
+                </LinearLayout>
+
+                <!-- Sex -->
+
+                <LinearLayout
+                    style="@style/SettingsGroupRow">
+
+                    <TextView
+                        style="@style/SettingsItem.Label"
+                        android:id="@+id/sex_label"
+                        android:text="@string/settings_label_sex" />
+
+                    <Space style="@style/SettingsItem.Spacer" />
+
+                    <TextView
+                        style="@style/SettingsItem.Value"
+                        android:id="@+id/sex_text_view" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Preferences -->
+
+            <LinearLayout
+                style="@style/SettingsGroup"
+                android:id="@+id/preferences_group"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/biometrics_group"
+                tools:ignore="UseSwitchCompatOrMaterialXml">
+
+                <TextView
+                    style="@style/SettingsGroupHeading"
+                    android:id="@+id/preferences_heading"
+                    android:text="@string/settings_header_preferences" />
+
+                <!-- Height Units -->
+
+                <LinearLayout
+                    style="@style/SettingsGroupRow">
+
+                    <TextView
+                        style="@style/SettingsItem.Label"
+                        android:id="@+id/imperial_height_switch_label"
+                        android:text="@string/settings_label_imperial_height" />
+
+                    <Space style="@style/SettingsItem.Spacer" />
+
+                    <Switch
+                        style="@style/SettingsItem.Value"
+                        android:id="@+id/imperial_height_switch" />
+
+                </LinearLayout>
+
+                <!-- Weight Units -->
+
+                <LinearLayout
+                    style="@style/SettingsGroupRow">
+
+                    <TextView
+                        style="@style/SettingsItem.Label"
+                        android:id="@+id/imperial_weight_switch_label"
+                        android:text="@string/settings_label_imperial_weight" />
+
+                    <Space style="@style/SettingsItem.Spacer" />
+
+                    <Switch
+                        style="@style/SettingsItem.Value"
+                        android:id="@+id/imperial_weight_switch" />
+
+                </LinearLayout>
+
+                <!-- Imperial Weight Type -->
+
+                <LinearLayout
+                    style="@style/SettingsGroupRow"
+                    android:id="@+id/imperial_weight_type_row">
+
+                    <TextView
+                        style="@style/SettingsItem.Label"
+                        android:id="@+id/imperial_weight_type_label"
+                        android:text="@string/settings_label_imperial_weight_type" />
+
+                    <Space style="@style/SettingsItem.Spacer" />
+
+                    <TextView
+                        style="@style/SettingsItem.Value"
+                        android:id="@+id/imperial_weight_type_text_view" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <!-- Catalog FAB -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/catalog_fab"
+        android:contentDescription="@string/catalog_title"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:srcCompat="@drawable/ic_catalog_black_24dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

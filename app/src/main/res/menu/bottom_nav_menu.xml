@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_day"
+        android:icon="@drawable/ic_day_black_24dp"
+        android:title="@string/day_title" />
+
+    <item
+        android:id="@+id/navigation_check_in"
+        android:icon="@drawable/ic_check_in_black_24dp"
+        android:title="@string/check_in_title" />
+
+    <item
+        android:id="@+id/navigation_history"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="@string/history_title" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/settings_title" />
+
+</menu>

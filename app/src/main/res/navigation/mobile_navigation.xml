@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_day">
+
+    <fragment
+        android:id="@+id/navigation_day"
+        android:name="com.fairybow.caloriediary.ui.day.DayFragment"
+        android:label="@string/day_title"
+        tools:layout="@layout/fragment_day" />
+
+    <fragment
+        android:id="@+id/navigation_check_in"
+        android:name="com.fairybow.caloriediary.ui.check_in.CheckInFragment"
+        android:label="@string/check_in_title"
+        tools:layout="@layout/fragment_check_in" />
+
+    <fragment
+        android:id="@+id/navigation_history"
+        android:name="com.fairybow.caloriediary.ui.history.HistoryFragment"
+        android:label="@string/history_title"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.fairybow.caloriediary.ui.settings.SettingsFragment"
+        android:label="@string/settings_title"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_catalog"
+            app:destination="@id/navigation_catalog" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_catalog"
+        android:name="com.fairybow.caloriediary.ui.catalog.CatalogFragment"
+        android:label="@string/catalog_title"
+        tools:layout="@layout/fragment_catalog" />
+
+</navigation>

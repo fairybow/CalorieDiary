@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CalorieDiary</string>
+    <string name="positive_button">OK</string>
+    <string name="check_in_title">Check-In</string>
+    <string name="check_in_date_label">Last check-in</string>
+    <string name="check_in_date_null">Never</string>
+    <string name="day_title">Day</string>
+    <string name="history_title">History</string>
+    <string name="catalog_title">Catalog</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_header_biometrics">Biometrics</string>
+    <string name="settings_label_activity">Activity level</string>
+    <string name="settings_label_age">Age</string>
+    <string name="settings_label_sex">Sex</string>
+    <string name="settings_label_height">Height</string>
+    <string name="settings_header_preferences">Preferences</string>
+    <string name="settings_label_imperial_height">Use imperial height</string>
+    <string name="settings_label_imperial_weight">Use imperial weight</string>
+    <string name="settings_label_imperial_weight_type">Imperial weight units</string>
+</resources>

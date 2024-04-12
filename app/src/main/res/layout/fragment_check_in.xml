@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ui.check_in.CheckInFragment">
+
+    <TextView
+        style="@style/CheckInTextView"
+        android:id="@+id/current_weight_text_view"
+        android:textSize="50sp" />
+
+    <TextView
+        style="@style/CheckInTextView"
+        android:id="@+id/last_check_in_text_view"
+        android:textSize="18sp" />
+
+</LinearLayout>
