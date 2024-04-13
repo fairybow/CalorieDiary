@@ -33,28 +33,28 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     private fun biometricsGroup() {
         listOf(
             TextViewBindingHelper(
-                sharedViewModel.activityLevel,
-                binding.activityTextView,
-                { showEnumSelectDialog(it, sharedViewModel::setActivityLevel) },
-                { it.toSentenceCaseString() }
+                mutableLiveData = sharedViewModel.activityLevel,
+                view = binding.activityTextView,
+                conversionMethod = { it.toSentenceCaseString() },
+                onClick = { showEnumSelectDialog(it, sharedViewModel::setActivityLevel) }
             ),
             TextViewBindingHelper(
-                sharedViewModel.birthdate,
-                binding.ageTextView,
-                { showBirthdateSelectDialog(it) },
-                { getCurrentAge(it).toString() }
+                mutableLiveData = sharedViewModel.birthdate,
+                view = binding.ageTextView,
+                conversionMethod = { getCurrentAge(it).toString() },
+                onClick = { showBirthdateSelectDialog(it) }
             ),
             TextViewBindingHelper(
-                sharedViewModel.height,
-                binding.heightTextView,
-                { showCorrectHeightDialog(it) },
-                { heightTextViewText(it) }
+                mutableLiveData = sharedViewModel.height,
+                view = binding.heightTextView,
+                conversionMethod = { heightTextViewText(it) },
+                onClick = { showCorrectHeightDialog(it) }
             ),
             TextViewBindingHelper(
-                sharedViewModel.sex,
-                binding.sexTextView,
-                { showEnumSelectDialog(it, sharedViewModel::setSex) },
-                { it.toSentenceCaseString() }
+                mutableLiveData = sharedViewModel.sex,
+                view = binding.sexTextView,
+                conversionMethod = { it.toSentenceCaseString() },
+                onClick = { showEnumSelectDialog(it, sharedViewModel::setSex) }
             )
         ).forEach { it.observe(viewLifecycleOwner) }
     }
@@ -62,20 +62,20 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     private fun preferencesGroup() {
         listOf(
             SwitchBindingHelper(
-                sharedViewModel.useImperialHeight,
-                binding.imperialHeightSwitch,
-                { sharedViewModel.setUseImperialHeight(it) },
-                {
+                mutableLiveData = sharedViewModel.useImperialHeight,
+                view = binding.imperialHeightSwitch,
+                setter = { sharedViewModel.setUseImperialHeight(it) },
+                auxiliaryAction = {
                     binding.heightTextView.text = sharedViewModel.height.value?.let {
                         heightTextViewText(it)
                     }
                 }
             ),
             SwitchBindingHelper(
-                sharedViewModel.useImperialWeight,
-                binding.imperialWeightSwitch,
-                { sharedViewModel.setUseImperialWeight(it) },
-                {
+                mutableLiveData = sharedViewModel.useImperialWeight,
+                view = binding.imperialWeightSwitch,
+                setter = { sharedViewModel.setUseImperialWeight(it) },
+                auxiliaryAction = {
                     if (sharedViewModel.useImperialWeight.value == true) {
                         binding.imperialWeightTypeRow.visibility = View.VISIBLE
                     } else {
@@ -87,10 +87,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
 
         listOf(
             TextViewBindingHelper(
-                sharedViewModel.imperialWeight,
-                binding.imperialWeightTypeTextView,
-                { showEnumSelectDialog(it, sharedViewModel::setImperialWeight) },
-                { it.toSentenceCaseString() }
+                mutableLiveData = sharedViewModel.imperialWeight,
+                view = binding.imperialWeightTypeTextView,
+                conversionMethod = { it.toSentenceCaseString() },
+                onClick = { showEnumSelectDialog(it, sharedViewModel::setImperialWeight) }
             )
         ).forEach { it.observe(viewLifecycleOwner) }
     }
@@ -105,7 +105,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
             0,
             0,
             margin,
-            (margin + (bottomNavView()?.height ?: 80))
+            (margin + (bottomNavHeight()?: 80))
         )
 
         catalogFab.layoutParams = layoutParams

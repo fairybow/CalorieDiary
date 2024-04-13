@@ -1,8 +1,10 @@
 package com.fairybow.caloriediary.ui.day
 
 import com.fairybow.caloriediary.databinding.FragmentDayBinding
+import com.fairybow.caloriediary.tools.UNIT_RATE_KC
 import com.fairybow.caloriediary.tools.getCurrentAge
 import com.fairybow.caloriediary.tools.mifflinStJeor
+import com.fairybow.caloriediary.tools.prettify
 import com.fairybow.caloriediary.ui.BaseFragment
 import com.fairybow.caloriediary.ui.TextViewBindingHelper
 import kotlin.math.roundToInt
@@ -16,35 +18,31 @@ class DayFragment : BaseFragment<FragmentDayBinding, DayViewModel>(
     override suspend fun whileOnCreateView() {
         listOf(
             TextViewBindingHelper(
-                viewModel.budget,
-                binding.budgetTextView
+                mutableLiveData = viewModel.budget,
+                view = binding.currentBudgetTextView,
+                conversionMethod = { prettify(it) }
             )
         ).forEach { it.observe(viewLifecycleOwner) }
 
-        val liveDataTriggerList = listOf(
+        binding.budgetUnitRateTextView.text = UNIT_RATE_KC
+
+        listOf(
             sharedViewModel.activityLevel,
             sharedViewModel.birthdate,
             sharedViewModel.height,
             sharedViewModel.sex,
             sharedViewModel.kilograms
-        )
-
-        // TODO: Just make MSJ params nullable and return zero from there?
-        liveDataTriggerList.forEach { liveData ->
+        ).forEach { liveData ->
             liveData.observe(viewLifecycleOwner) {
-                if (liveDataTriggerList.any { it.value == null }) {
-                    viewModel.setBudget(0)
-                } else {
-                    viewModel.setBudget(
-                        mifflinStJeor(
-                            sharedViewModel.kilograms.value!!,
-                            sharedViewModel.height.value!!,
-                            getCurrentAge(sharedViewModel.birthdate.value!!),
-                            sharedViewModel.sex.value!!,
-                            sharedViewModel.activityLevel.value!!
-                        ).roundToInt()
-                    )
-                }
+                viewModel.setBudget(
+                    mifflinStJeor(
+                        sharedViewModel.kilograms.value,
+                        sharedViewModel.height.value,
+                        sharedViewModel.birthdate.value?.let { it1 -> getCurrentAge(it1) },
+                        sharedViewModel.sex.value,
+                        sharedViewModel.activityLevel.value
+                    ).roundToInt()
+                )
             }
         }
     }

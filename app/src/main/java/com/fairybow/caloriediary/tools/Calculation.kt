@@ -32,10 +32,3 @@ fun epochYearsAway(n: Int): Long {
 
     return calendar.timeInMillis
 }
-
-fun daysAway(n: Int): Date {
-    val calendar = Calendar.getInstance().apply { time = Date() }
-    calendar.add(Calendar.DAY_OF_MONTH, n)
-
-    return calendar.time
-}

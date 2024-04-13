@@ -1,7 +1,6 @@
 package com.fairybow.caloriediary.data
 
 import androidx.room.TypeConverter
-import com.fairybow.caloriediary.tools.ImperialWeight
 
 class Converters {
     @TypeConverter

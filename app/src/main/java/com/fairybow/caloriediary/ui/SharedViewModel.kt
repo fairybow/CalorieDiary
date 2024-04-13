@@ -5,74 +5,71 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairybow.caloriediary.CalorieDiary
 import com.fairybow.caloriediary.data.ActivityLevel
+import com.fairybow.caloriediary.data.ImperialWeight
 import com.fairybow.caloriediary.data.Sex
 import com.fairybow.caloriediary.data.ZeroHourDate
-import com.fairybow.caloriediary.tools.ImperialWeight
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
     private val biometricsDao = CalorieDiary.database.biometricsDao()
+    private val journalDao = CalorieDiary.database.journalDao()
+    private val preferencesDao = CalorieDiary.database.preferencesDao()
+
     val activityLevel = MutableLiveData<ActivityLevel>()
     val birthdate = MutableLiveData<ZeroHourDate>()
     val height = MutableLiveData<Double>()
-    val sex = MutableLiveData<Sex>()
-
-    private val journalDao = CalorieDiary.database.journalDao()
-    val kilograms = MutableLiveData<Double>()
-
-    private val preferencesDao = CalorieDiary.database.preferencesDao()
     val imperialWeight = MutableLiveData<ImperialWeight>()
+    val kilograms = MutableLiveData<Double>()
+    val sex = MutableLiveData<Sex>()
     val useImperialHeight = MutableLiveData<Boolean>()
     val useImperialWeight = MutableLiveData<Boolean>()
 
     init {
         viewModelScope.launch {
-            activityLevel.value = getLiveData { biometricsDao.getActivityLevel() }
-            birthdate.value = getLiveData { biometricsDao.getBirthdate() }
-            height.value = getLiveData { biometricsDao.getHeight() }
-            sex.value = getLiveData { biometricsDao.getSex() }
-
-            kilograms.value = getLiveData { journalDao.getKilograms() }
-
-            imperialWeight.value = getLiveData { preferencesDao.getImperialWeight() }
-            useImperialHeight.value = getLiveData { preferencesDao.getUseImperialHeight() }
-            useImperialWeight.value = getLiveData { preferencesDao.getUseImperialWeight() }
+            activityLevel.value = getDaoData { biometricsDao.getActivityLevel() }
+            birthdate.value = getDaoData { biometricsDao.getBirthdate() }
+            height.value = getDaoData { biometricsDao.getHeight() }
+            imperialWeight.value = getDaoData { preferencesDao.getImperialWeight() }
+            kilograms.value = getDaoData { journalDao.getKilograms() }
+            sex.value = getDaoData { biometricsDao.getSex() }
+            useImperialHeight.value = getDaoData { preferencesDao.getUseImperialHeight() }
+            useImperialWeight.value = getDaoData { preferencesDao.getUseImperialWeight() }
         }
     }
 
     fun setActivityLevel(activityLevel: ActivityLevel) {
-        setLiveData(
-            viewModelScope,
-            activityLevel,
-            { biometricsDao.updateActivityLevel(it) },
-            { this.activityLevel.value = activityLevel }
+        setDaoAndLiveData(
+            scope = viewModelScope,
+            value = activityLevel,
+            dataSetter = { biometricsDao.updateActivityLevel(it) },
+            liveDataSetter = { this.activityLevel.value = activityLevel }
         )
     }
 
     fun setBirthdate(birthdate: ZeroHourDate) {
-        setLiveData(
-            viewModelScope,
-            birthdate,
-            { biometricsDao.updateBirthdate(it) },
-            { this.birthdate.value = birthdate }
+        setDaoAndLiveData(
+            scope = viewModelScope,
+            value = birthdate,
+            dataSetter = { biometricsDao.updateBirthdate(it) },
+            liveDataSetter = { this.birthdate.value = birthdate }
         )
     }
 
     fun setHeight(height: Double) {
-        setLiveData(
-            viewModelScope,
-            height,
-            { biometricsDao.updateHeight(it) },
-            { this.height.value = height }
+        setDaoAndLiveData(
+            scope = viewModelScope,
+            value = height,
+            dataSetter = { biometricsDao.updateHeight(it) },
+            liveDataSetter = { this.height.value = height }
         )
     }
 
     fun setSex(sex: Sex) {
-        setLiveData(
-            viewModelScope,
-            sex,
-            { biometricsDao.updateSex(it) },
-            { this.sex.value = sex }
+        setDaoAndLiveData(
+            scope = viewModelScope,
+            value = sex,
+            dataSetter = { biometricsDao.updateSex(it) },
+            liveDataSetter = { this.sex.value = sex }
         )
     }
 
@@ -80,38 +77,38 @@ class SharedViewModel : ViewModel() {
         //val rounded = round(kilograms * 100) / 100
         // ^ wacky stuff happens
 
-        setLiveData(
-            viewModelScope,
-            kilograms,
-            { journalDao.updateKilograms(it) },
-            { this.kilograms.value = kilograms }
+        setDaoAndLiveData(
+            scope = viewModelScope,
+            value = kilograms,
+            dataSetter = { journalDao.updateKilograms(it) },
+            liveDataSetter = { this.kilograms.value = kilograms }
         )
     }
 
     fun setImperialWeight(imperialWeight: ImperialWeight) {
-        setLiveData(
-            viewModelScope,
-            imperialWeight,
-            { preferencesDao.updateImperialWeight(it) },
-            { this.imperialWeight.value = imperialWeight }
+        setDaoAndLiveData(
+            scope = viewModelScope,
+            value = imperialWeight,
+            dataSetter = { preferencesDao.updateImperialWeight(it) },
+            liveDataSetter = { this.imperialWeight.value = imperialWeight }
         )
     }
 
     fun setUseImperialHeight(useImperialHeight: Boolean) {
-        setLiveData(
-            viewModelScope,
-            useImperialHeight,
-            { preferencesDao.updateUseImperialHeight(it) },
-            { this.useImperialHeight.value = useImperialHeight }
+        setDaoAndLiveData(
+            scope = viewModelScope,
+            value = useImperialHeight,
+            dataSetter = { preferencesDao.updateUseImperialHeight(it) },
+            liveDataSetter = { this.useImperialHeight.value = useImperialHeight }
         )
     }
 
     fun setUseImperialWeight(useImperialWeight: Boolean) {
-        setLiveData(
-            viewModelScope,
-            useImperialWeight,
-            { preferencesDao.updateUseImperialWeight(it) },
-            { this.useImperialWeight.value = useImperialWeight }
+        setDaoAndLiveData(
+            scope = viewModelScope,
+            value = useImperialWeight,
+            dataSetter = { preferencesDao.updateUseImperialWeight(it) },
+            liveDataSetter = { this.useImperialWeight.value = useImperialWeight }
         )
     }
 }

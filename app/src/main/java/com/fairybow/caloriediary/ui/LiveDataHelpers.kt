@@ -6,28 +6,28 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-suspend fun <T> getLiveData(dataGetter: suspend () -> T): T {
+suspend fun <T> getDaoData(dataGetter: suspend () -> T): T {
     val value = withContext(Dispatchers.IO) {
         dataGetter()
     }
 
-    Logger.d("getLiveData: $value value retrieved")
+    Logger.d("getDaoData: $value value retrieved")
 
     return value
 }
 
-suspend fun <T> getNullableLiveData(dataGetter: suspend () -> T?): T? {
+suspend fun <T> getNullableDaoData(dataGetter: suspend () -> T?): T? {
     val value = withContext(Dispatchers.IO) {
         dataGetter()
     }
 
-    Logger.d("getNullableLiveData: $value value retrieved")
+    Logger.d("getNullableDaoData: $value value retrieved")
 
     return value
 }
 
 
-fun <T> setLiveData(scope: CoroutineScope, value: T, dataSetter: suspend (T) -> Unit, liveDataSetter: (T) -> Unit) {
+fun <T> setDaoAndLiveData(scope: CoroutineScope, value: T, dataSetter: suspend (T) -> Unit, liveDataSetter: (T) -> Unit) {
     scope.launch {
         withContext(Dispatchers.IO) {
             dataSetter(value)
@@ -35,6 +35,6 @@ fun <T> setLiveData(scope: CoroutineScope, value: T, dataSetter: suspend (T) -> 
 
         liveDataSetter(value)
 
-        Logger.d("setLiveData: $value value set")
+        Logger.d("setDaoAndLiveData: $value value set")
     }
 }

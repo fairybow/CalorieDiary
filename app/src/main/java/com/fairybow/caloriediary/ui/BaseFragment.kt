@@ -12,7 +12,6 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewbinding.ViewBinding
 import com.fairybow.caloriediary.MainActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
@@ -36,16 +35,12 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
             ViewModelProvider(this)[SharedViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        val root: View = binding.root
-
         lifecycleScope.launch {
             whileOnCreateView()
         }
 
-        return root
+        return binding.root
     }
-
-    open suspend fun whileOnCreateView() { /* Optional */ }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,18 +52,19 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         }
     }
 
-    open suspend fun whileOnViewCreated() { /* Optional */ }
-
     override fun onDestroyView() {
         super.onDestroyView()
+
         _binding = null
     }
 
-    fun bottomNavView(): BottomNavigationView? {
-        return if (activity is MainActivity) {
-            (activity as MainActivity).getBottomNav()
-        } else {
-            null
+    fun bottomNavHeight(): Int? {
+        return when {
+            activity is MainActivity -> (activity as MainActivity).bottomNavHeight()
+            else -> null
         }
     }
+
+    open suspend fun whileOnCreateView() { /* Optional */ }
+    open suspend fun whileOnViewCreated() { /* Optional */ }
 }

@@ -9,14 +9,19 @@ import java.util.GregorianCalendar
 import java.util.Locale
 
 class ZeroHourDate {
+    private val _date: Date
+    private val _calendar: Calendar get() = setCalendar(_date)
+    private val _threadLocalCalendar: ThreadLocal<Calendar> = object : ThreadLocal<Calendar>() {
+        override fun initialValue(): Calendar {
+            return Calendar.getInstance()
+        }
+    }
+
     constructor(date: Date = Date()) {
         this._date = setCalendar(date).time
     }
-
     constructor(year: Int, month: Int, day: Int) : this(GregorianCalendar(year, month, day))
-
     constructor(timestamp: Long) : this(Date(timestamp))
-
     constructor(calendar: Calendar) : this(calendar.time)
 
     override fun equals(other: Any?): Boolean {
@@ -48,13 +53,13 @@ class ZeroHourDate {
                 "tomorrow"
             }
             else -> {
-                val delimiter = ", "
+                val delimiter = ","
                 val day = toOrdinatedString(day())
-                var str = "${dayName()}$delimiter${monthName()} $day"
+                var str = "${dayName()}$delimiter ${monthName()} $day"
                 val year = year()
 
                 if (year != ZeroHourDate().year() || includeYearIfSameYear) {
-                    str += "$delimiter$year"
+                    str += "$delimiter $year"
                 }
 
                 str
@@ -92,6 +97,16 @@ class ZeroHourDate {
         return format.format(_calendar.time)
     }
 
+    private fun setCalendar(date: Date): Calendar {
+        return _threadLocalCalendar.get()!!.apply {
+            time = date
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+    }
+
     companion object {
         private fun daysAway(n: Int): Date {
             val calendar = Calendar.getInstance().apply { time = Date() }
@@ -110,27 +125,6 @@ class ZeroHourDate {
 
         fun today(): ZeroHourDate {
             return ZeroHourDate()
-        }
-    }
-
-    private val _date: Date
-
-    private val _calendar: Calendar
-        get() = setCalendar(_date)
-
-    private val _threadLocalCalendar: ThreadLocal<Calendar> = object : ThreadLocal<Calendar>() {
-        override fun initialValue(): Calendar {
-            return Calendar.getInstance()
-        }
-    }
-
-    private fun setCalendar(date: Date): Calendar {
-        return _threadLocalCalendar.get()!!.apply {
-            time = date
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
         }
     }
 }

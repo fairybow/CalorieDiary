@@ -8,15 +8,15 @@
     tools:context=".ui.day.DayFragment">
 
     <TextView
-        android:id="@+id/budget_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
+        style="@style/DayTextView"
+        android:id="@+id/current_budget_text_view"
         android:textSize="50sp" />
 
-    <!-- Add scroll view -->
+    <TextView
+        style="@style/DayTextView"
+        android:id="@+id/budget_unit_rate_text_view"
+        android:textSize="18sp" />
+
+    <!-- TODO: Move up and add scroll view -->
 
 </LinearLayout>

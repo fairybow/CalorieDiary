@@ -4,9 +4,9 @@ import android.app.AlertDialog
 import android.text.InputType
 import android.widget.EditText
 import com.fairybow.caloriediary.R
+import com.fairybow.caloriediary.data.ImperialWeight
 import com.fairybow.caloriediary.data.ZeroHourDate
 import com.fairybow.caloriediary.databinding.FragmentCheckInBinding
-import com.fairybow.caloriediary.tools.ImperialWeight
 import com.fairybow.caloriediary.tools.capitalizeFirst
 import com.fairybow.caloriediary.tools.prettify
 import com.fairybow.caloriediary.tools.prettyKilograms
@@ -27,16 +27,16 @@ class CheckInFragment : BaseFragment<FragmentCheckInBinding, CheckInViewModel>(
     override suspend fun whileOnCreateView() {
         listOf(
             TextViewBindingHelper(
-                sharedViewModel.kilograms,
-                binding.currentWeightTextView,
-                { showSetWeightDialog(it) },
-                { currentWeightText(it) }
+                mutableLiveData = sharedViewModel.kilograms,
+                view = binding.currentWeightTextView,
+                conversionMethod = { currentWeightText(it) },
+                onClick = { showSetWeightDialog(it) }
             ),
             TextViewBindingHelper(
-                viewModel.lastCheckInDate,
-                binding.lastCheckInTextView,
-                { showSetWeightDialog(sharedViewModel.kilograms.value) }, // not working?
-                { lastCheckInDateText(it) }
+                mutableLiveData = viewModel.lastCheckInDate,
+                view = binding.lastCheckInTextView,
+                conversionMethod = { lastCheckInDateText(it) },
+                onClick = { showSetWeightDialog(sharedViewModel.kilograms.value) }
             )
         ).forEach { it.observe(viewLifecycleOwner) }
     }

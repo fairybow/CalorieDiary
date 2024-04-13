@@ -8,7 +8,6 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.fairybow.caloriediary.debug.Logger
-import com.fairybow.caloriediary.tools.ImperialWeight
 
 @Dao
 interface BiometricsDao {
@@ -84,8 +83,9 @@ interface JournalDao {
     @Query("SELECT * FROM JournalEntry WHERE id < :id ORDER BY id DESC LIMIT 1")
     fun getPreviousJournalEntry(id: ZeroHourDate): JournalEntry?
 
-    @Insert
-    fun insertJournalEntry(journalEntry: JournalEntry): Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertJournalEntry(journalEntry: JournalEntry): Long
+    // ^ Was originally not suspend & had no conflict strategy--may cause issues?
 
     @Delete
     fun deleteJournalEntry(journalEntry: JournalEntry)

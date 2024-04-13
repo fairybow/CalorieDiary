@@ -10,6 +10,12 @@ enum class ActivityLevel {
     VERY_ACTIVE
 }
 
+enum class ImperialWeight {
+    POUNDS,
+    STONES,
+    STONES_AND_POUNDS
+}
+
 enum class Sex {
     NOT_SET,
     FEMALE,

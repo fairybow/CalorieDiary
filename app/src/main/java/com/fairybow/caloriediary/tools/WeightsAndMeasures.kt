@@ -1,6 +1,7 @@
 package com.fairybow.caloriediary.tools
 
 import com.fairybow.caloriediary.data.ActivityLevel
+import com.fairybow.caloriediary.data.ImperialWeight
 import com.fairybow.caloriediary.data.Sex
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
@@ -11,7 +12,7 @@ const val FEET_CM_FACTOR = 30.48
 const val KG_LB_FACTOR = 2.20462262
 const val ST_KG_FACTOR = 6.35029317
 const val ST_LB_FACTOR = 14
-const val KC_KJ_FACTOR = 4.184
+//const val KC_KJ_FACTOR = 4.184
 
 const val AUSTRALIA = "AU"
 const val CANADA = "CA"
@@ -35,7 +36,7 @@ const val UNIT_KG = "kg"
 const val UNIT_LB = "lb"
 const val UNIT_ST = "st"
 const val UNIT_RATE_KC = "kcal/day"
-const val UNIT_RATE_KJ = "kJ/day"
+//const val UNIT_RATE_KJ = "kJ/day"
 
 const val MSJ_KG_FACTOR = 10.0
 const val MSJ_CM_FACTOR = 6.25
@@ -103,12 +104,6 @@ fun usesImperialWeight(countryCode: String): Boolean {
 
 // Weight
 
-enum class ImperialWeight {
-    POUNDS,
-    STONES,
-    STONES_AND_POUNDS
-}
-
 fun toKilograms(pounds: Double): Double {
     return pounds / KG_LB_FACTOR
 }
@@ -144,11 +139,15 @@ fun imperialWeightType(countryCode: String): ImperialWeight? {
     }
 }
 
-fun toKilojoules(kilocalories: Double): Double {
+/*fun toKilojoules(kilocalories: Double): Double {
     return kilocalories * KC_KJ_FACTOR
-}
+}*/
 
-fun mifflinStJeor(weight: Double, height: Double, age: Int, sex: Sex, activityLevel: ActivityLevel): Double {
+fun mifflinStJeor(weight: Double?, height: Double?, age: Int?, sex: Sex?, activityLevel: ActivityLevel?): Double {
+    if (weight == null || height == null || age == null || sex == null || activityLevel == null) {
+        return 0.0
+    }
+
     val activityAdj = when (activityLevel) {
         ActivityLevel.SEDENTARY -> 1.2
         ActivityLevel.LIGHTLY_ACTIVE -> 1.375
@@ -183,9 +182,14 @@ fun prettyFeetInches(centimeters: Double): String {
     return "${height.first} $UNIT_FT ${height.second.roundToInt()} $UNIT_IN"
 }
 
-// TODO: Add thousandths commas
 fun prettify(value: Double): String {
-    val df = DecimalFormat("0.##")
+    val df = DecimalFormat("#,###.##")
+
+    return df.format(value)
+}
+
+fun prettify(value: Int): String {
+    val df = DecimalFormat("#,###")
 
     return df.format(value)
 }
@@ -208,6 +212,6 @@ fun prettyStonesPounds(kilograms: Double): String {
     return "${weight.first} $UNIT_ST ${prettify(weight.second)} $UNIT_LB"
 }
 
-/*fun prettyMifflin(weight: Double, height: Double, age: Int, sex: Sex, activityLevel: ActivityLevel): String {
-    //
+/*fun prettyKCalories(kCalories: Double): String {
+    return "${kCalories.roundToInt()} $UNIT_RATE_KC"
 }*/

@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.fairybow.caloriediary.tools.ImperialWeight
 import com.fairybow.caloriediary.tools.imperialWeightType
 import com.fairybow.caloriediary.tools.usesImperialHeight
 import com.fairybow.caloriediary.tools.usesImperialWeight

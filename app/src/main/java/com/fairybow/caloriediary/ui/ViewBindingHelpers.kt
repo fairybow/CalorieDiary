@@ -18,8 +18,8 @@ abstract class ViewBindingHelper<T, V : View>(
 class TextViewBindingHelper<T>(
     mutableLiveData: MutableLiveData<T>,
     view: TextView,
-    private val onClick: ((T) -> Unit)? = null,
-    val conversionMethod: (T) -> String = { it.toString() }
+    val conversionMethod: (T) -> String = { it.toString() },
+    private val onClick: ((T) -> Unit)? = null
 ) : ViewBindingHelper<T, TextView>(mutableLiveData, view) {
     init {
         view.setOnClickListener {

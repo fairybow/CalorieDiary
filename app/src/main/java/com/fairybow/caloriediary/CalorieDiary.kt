@@ -20,51 +20,64 @@ class CalorieDiary : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        database = Room.databaseBuilder(this, AppDatabase::class.java, "caloriediary-database").build()
+        database = Room.databaseBuilder(
+            this,
+            AppDatabase::class.java,
+            "caloriediary-database"
+        ).build()
 
         Logger.d("Database created: $database")
 
-        // Insert entities into the database
         CoroutineScope(Dispatchers.IO).launch {
-            val biometricsDao = database.biometricsDao()
-            val preferencesDao = database.preferencesDao()
-            val journalDao = database.journalDao()
+            initializeBiometricsDao()
+            initializeJournalDao()
+            initializePreferencesDao()
+        }
+    }
 
-            var biometrics = biometricsDao.getBiometrics()
+    private suspend fun initializeBiometricsDao() {
+        val biometricsDao = database.biometricsDao()
+        var biometrics = biometricsDao.getBiometrics()
 
-            if (biometrics == null) {
-                biometrics = Biometrics()
+        if (biometrics == null) {
+            biometrics = Biometrics()
 
-                val rowId = biometricsDao.insertBiometrics(biometrics)
-                Logger.d("Biometrics inserted at row: $rowId")
-            }
+            val rowId = biometricsDao.insertBiometrics(biometrics)
+            Logger.d("Biometrics inserted at row: $rowId")
+        }
+    }
 
-            var preferences = preferencesDao.getPreferences()
+    private suspend fun initializeJournalDao() {
+        val journalDao = database.journalDao()
 
-            if (preferences == null) {
-                preferences = Preferences()
+        // TODO: What if app is open from 11:59 to midnight?
+        val today = ZeroHourDate()
+        var journalEntry = journalDao.getJournalEntry(today)
 
-                val rowId = preferencesDao.insertPreferences(preferences)
-                Logger.d("Preferences inserted at row: $rowId")
-            }
+        if (journalEntry == null) {
+            val previousEntry = journalDao.getPreviousJournalEntry(today)
 
-            // TODO: What if app is open from 11:59 to midnight?
-            val today = ZeroHourDate()
-            var journalEntry = journalDao.getJournalEntry(today)
+            journalEntry = JournalEntry(
+                kilograms = previousEntry?.kilograms ?: 0.0,
+                lastCheckInDate = previousEntry?.lastCheckInDate
+            )
 
-            if (journalEntry == null) {
-                val previousEntry = journalDao.getPreviousJournalEntry(today)
+            val rowId = journalDao.insertJournalEntry(journalEntry)
+            Logger.d("JournalEntry: $journalEntry inserted at row: $rowId")
+        }
 
-                journalEntry = JournalEntry(
-                    kilograms = previousEntry?.kilograms ?: 0.0,
-                    lastCheckInDate = previousEntry?.lastCheckInDate
-                )
+        journalDao.clean()
+    }
 
-                val rowId = journalDao.insertJournalEntry(journalEntry)
-                Logger.d("JournalEntry: $journalEntry inserted at row: $rowId")
-            }
+    private suspend fun initializePreferencesDao() {
+        val preferencesDao = database.preferencesDao()
+        var preferences = preferencesDao.getPreferences()
 
-            journalDao.clean()
+        if (preferences == null) {
+            preferences = Preferences()
+
+            val rowId = preferencesDao.insertPreferences(preferences)
+            Logger.d("Preferences inserted at row: $rowId")
         }
     }
 }
