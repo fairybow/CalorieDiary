@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.fairybow.caloriediary.debug.Logger
+import com.fairybow.caloriediary.tools.ZeroHourDate
 
 @Dao
 interface BiometricsDao {

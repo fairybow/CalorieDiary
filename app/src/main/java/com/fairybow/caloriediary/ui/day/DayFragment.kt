@@ -45,5 +45,7 @@ class DayFragment : BaseFragment<FragmentDayBinding, DayViewModel>(
                 )
             }
         }
+
+        addNavFab(binding.addFab)
     }
 }

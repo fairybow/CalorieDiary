@@ -7,7 +7,7 @@ import com.fairybow.caloriediary.CalorieDiary
 import com.fairybow.caloriediary.data.ActivityLevel
 import com.fairybow.caloriediary.data.ImperialWeight
 import com.fairybow.caloriediary.data.Sex
-import com.fairybow.caloriediary.data.ZeroHourDate
+import com.fairybow.caloriediary.tools.ZeroHourDate
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
@@ -38,7 +38,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun setActivityLevel(activityLevel: ActivityLevel) {
-        setDaoAndLiveData(
+        setDaoLiveData(
             scope = viewModelScope,
             value = activityLevel,
             dataSetter = { biometricsDao.updateActivityLevel(it) },
@@ -47,7 +47,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun setBirthdate(birthdate: ZeroHourDate) {
-        setDaoAndLiveData(
+        setDaoLiveData(
             scope = viewModelScope,
             value = birthdate,
             dataSetter = { biometricsDao.updateBirthdate(it) },
@@ -56,7 +56,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun setHeight(height: Double) {
-        setDaoAndLiveData(
+        setDaoLiveData(
             scope = viewModelScope,
             value = height,
             dataSetter = { biometricsDao.updateHeight(it) },
@@ -64,29 +64,8 @@ class SharedViewModel : ViewModel() {
         )
     }
 
-    fun setSex(sex: Sex) {
-        setDaoAndLiveData(
-            scope = viewModelScope,
-            value = sex,
-            dataSetter = { biometricsDao.updateSex(it) },
-            liveDataSetter = { this.sex.value = sex }
-        )
-    }
-
-    fun setKilograms(kilograms: Double) {
-        //val rounded = round(kilograms * 100) / 100
-        // ^ wacky stuff happens
-
-        setDaoAndLiveData(
-            scope = viewModelScope,
-            value = kilograms,
-            dataSetter = { journalDao.updateKilograms(it) },
-            liveDataSetter = { this.kilograms.value = kilograms }
-        )
-    }
-
     fun setImperialWeight(imperialWeight: ImperialWeight) {
-        setDaoAndLiveData(
+        setDaoLiveData(
             scope = viewModelScope,
             value = imperialWeight,
             dataSetter = { preferencesDao.updateImperialWeight(it) },
@@ -94,8 +73,29 @@ class SharedViewModel : ViewModel() {
         )
     }
 
+    fun setKilograms(kilograms: Double) {
+        //val rounded = round(kilograms * 100) / 100
+        // ^ wacky stuff happens
+
+        setDaoLiveData(
+            scope = viewModelScope,
+            value = kilograms,
+            dataSetter = { journalDao.updateKilograms(it) },
+            liveDataSetter = { this.kilograms.value = kilograms }
+        )
+    }
+
+    fun setSex(sex: Sex) {
+        setDaoLiveData(
+            scope = viewModelScope,
+            value = sex,
+            dataSetter = { biometricsDao.updateSex(it) },
+            liveDataSetter = { this.sex.value = sex }
+        )
+    }
+
     fun setUseImperialHeight(useImperialHeight: Boolean) {
-        setDaoAndLiveData(
+        setDaoLiveData(
             scope = viewModelScope,
             value = useImperialHeight,
             dataSetter = { preferencesDao.updateUseImperialHeight(it) },
@@ -104,7 +104,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun setUseImperialWeight(useImperialWeight: Boolean) {
-        setDaoAndLiveData(
+        setDaoLiveData(
             scope = viewModelScope,
             value = useImperialWeight,
             dataSetter = { preferencesDao.updateUseImperialWeight(it) },

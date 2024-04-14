@@ -4,15 +4,13 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.NumberPicker
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.fairybow.caloriediary.R
 import com.fairybow.caloriediary.data.toSentenceCaseString
 import com.fairybow.caloriediary.databinding.FragmentSettingsBinding
-import com.fairybow.caloriediary.data.ZeroHourDate
+import com.fairybow.caloriediary.tools.ZeroHourDate
 import com.fairybow.caloriediary.debug.Logger
 import com.fairybow.caloriediary.tools.*
 import com.fairybow.caloriediary.ui.BaseFragment
@@ -27,7 +25,11 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
     override suspend fun whileOnCreateView() {
         biometricsGroup()
         preferencesGroup()
-        setupCatalogFab()
+
+        addNavFab(
+            binding.catalogFab,
+            R.id.action_navigation_settings_to_navigation_catalog
+        )
     }
 
     private fun biometricsGroup() {
@@ -93,25 +95,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
                 onClick = { showEnumSelectDialog(it, sharedViewModel::setImperialWeight) }
             )
         ).forEach { it.observe(viewLifecycleOwner) }
-    }
-
-    private fun setupCatalogFab() {
-        val catalogFab = binding.catalogFab
-        val layoutParams = catalogFab.layoutParams as CoordinatorLayout.LayoutParams
-        val margin = 80
-
-        layoutParams.gravity = Gravity.BOTTOM or Gravity.END
-        layoutParams.setMargins(
-            0,
-            0,
-            margin,
-            (margin + (bottomNavHeight()?: 80))
-        )
-
-        catalogFab.layoutParams = layoutParams
-        catalogFab.setOnClickListener {
-            navController.navigate(R.id.action_navigation_settings_to_navigation_catalog)
-        }
     }
 
     // TODO: Move to Dialog file, and attempt to generalize other similar functions along with this

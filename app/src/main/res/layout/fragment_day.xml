@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     tools:context=".ui.day.DayFragment">
 
-    <TextView
-        style="@style/DayTextView"
-        android:id="@+id/current_budget_text_view"
-        android:textSize="50sp" />
+    <LinearLayout
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        style="@style/DayTextView"
-        android:id="@+id/budget_unit_rate_text_view"
-        android:textSize="18sp" />
+        <TextView
+            style="@style/DayTextView"
+            android:id="@+id/current_budget_text_view"
+            android:textSize="50sp" />
+
+        <TextView
+            style="@style/DayTextView"
+            android:id="@+id/budget_unit_rate_text_view"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <!-- TODO: Move up and add scroll view -->
 
-</LinearLayout>
+    <!-- Add FAB -->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_fab"
+        android:contentDescription="@string/day_add"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

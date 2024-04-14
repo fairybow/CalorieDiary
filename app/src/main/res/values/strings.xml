@@ -5,6 +5,7 @@
     <string name="check_in_date_label">Last check-in</string>
     <string name="check_in_date_null">Never</string>
     <string name="day_title">Day</string>
+    <string name="day_add">Add</string>
     <string name="history_title">History</string>
     <string name="catalog_title">Catalog</string>
     <string name="settings_title">Settings</string>

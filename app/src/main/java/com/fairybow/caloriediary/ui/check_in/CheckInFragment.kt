@@ -5,7 +5,7 @@ import android.text.InputType
 import android.widget.EditText
 import com.fairybow.caloriediary.R
 import com.fairybow.caloriediary.data.ImperialWeight
-import com.fairybow.caloriediary.data.ZeroHourDate
+import com.fairybow.caloriediary.tools.ZeroHourDate
 import com.fairybow.caloriediary.databinding.FragmentCheckInBinding
 import com.fairybow.caloriediary.tools.capitalizeFirst
 import com.fairybow.caloriediary.tools.prettify

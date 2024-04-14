@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairybow.caloriediary.CalorieDiary
-import com.fairybow.caloriediary.data.ZeroHourDate
+import com.fairybow.caloriediary.tools.ZeroHourDate
 import com.fairybow.caloriediary.ui.getNullableDaoData
-import com.fairybow.caloriediary.ui.setDaoAndLiveData
+import com.fairybow.caloriediary.ui.setDaoLiveData
 import kotlinx.coroutines.launch
 
 class CheckInViewModel : ViewModel() {
@@ -20,7 +20,7 @@ class CheckInViewModel : ViewModel() {
     }
 
     fun setLastCheckInDate(lastCheckInDate: ZeroHourDate) {
-        setDaoAndLiveData(
+        setDaoLiveData(
             scope = viewModelScope,
             value = lastCheckInDate,
             dataSetter = { journalDao.updateLastCheckInDate(it) },

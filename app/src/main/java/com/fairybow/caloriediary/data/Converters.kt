@@ -1,6 +1,7 @@
 package com.fairybow.caloriediary.data
 
 import androidx.room.TypeConverter
+import com.fairybow.caloriediary.tools.ZeroHourDate
 
 class Converters {
     @TypeConverter

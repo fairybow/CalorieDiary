@@ -1,6 +1,5 @@
-package com.fairybow.caloriediary.data
+package com.fairybow.caloriediary.tools
 
-import com.fairybow.caloriediary.tools.toOrdinatedString
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -108,13 +107,6 @@ class ZeroHourDate {
     }
 
     companion object {
-        private fun daysAway(n: Int): Date {
-            val calendar = Calendar.getInstance().apply { time = Date() }
-            calendar.add(Calendar.DAY_OF_MONTH, n)
-
-            return calendar.time
-        }
-
         fun yesterday(): ZeroHourDate {
             return ZeroHourDate(daysAway(-1))
         }

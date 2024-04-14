@@ -1,13 +1,20 @@
 package com.fairybow.caloriediary.tools
 
-import com.fairybow.caloriediary.data.ZeroHourDate
 import java.util.Calendar
 import java.util.Date
 
-// TODO: Add to ZHD
+fun daysAway(n: Int): Date {
+    val calendar = Calendar.getInstance().apply { time = Date() }
+    calendar.add(Calendar.DAY_OF_MONTH, n)
 
-fun midpoint(first: Double, last: Double): Double {
-    return (first + last) / 2
+    return calendar.time
+}
+
+fun epochYearsAway(n: Int): Long {
+    val calendar = Calendar.getInstance().apply { time = Date() }
+    calendar.add(Calendar.YEAR, n)
+
+    return calendar.timeInMillis
 }
 
 fun getCurrentAge(birthdate: Date): Int {
@@ -24,11 +31,4 @@ fun getCurrentAge(birthdate: Date): Int {
 
 fun getCurrentAge(birthdate: ZeroHourDate): Int {
     return getCurrentAge(birthdate.toDate())
-}
-
-fun epochYearsAway(n: Int): Long {
-    val calendar = Calendar.getInstance().apply { time = Date() }
-    calendar.add(Calendar.YEAR, n)
-
-    return calendar.timeInMillis
 }

@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    fun bottomNavHeight(): Int {
+    /*fun bottomNavHeight(): Int {
         return navView.height
-    }
+    }*/
 }

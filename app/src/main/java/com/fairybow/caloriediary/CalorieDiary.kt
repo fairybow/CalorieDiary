@@ -6,7 +6,7 @@ import com.fairybow.caloriediary.data.AppDatabase
 import com.fairybow.caloriediary.data.Biometrics
 import com.fairybow.caloriediary.data.JournalEntry
 import com.fairybow.caloriediary.data.Preferences
-import com.fairybow.caloriediary.data.ZeroHourDate
+import com.fairybow.caloriediary.tools.ZeroHourDate
 import com.fairybow.caloriediary.debug.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
