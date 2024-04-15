@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.fairybow.caloriediary.utilities.ZeroHourDate
 
 @Entity(indices = [Index("id")])
-data class DayTable(
+data class DayTableRow(
     @PrimaryKey val id: ZeroHourDate,
     var kilograms: Double,
     var lastCheckInDate: ZeroHourDate?

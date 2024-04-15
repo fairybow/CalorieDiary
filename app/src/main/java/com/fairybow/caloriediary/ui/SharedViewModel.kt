@@ -3,7 +3,7 @@ package com.fairybow.caloriediary.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fairybow.caloriediary.CalorieDiary
+import com.fairybow.caloriediary.CalorieDiary.Companion.repository
 import com.fairybow.caloriediary.utilities.ActivityLevel
 import com.fairybow.caloriediary.utilities.ImperialWeight
 import com.fairybow.caloriediary.utilities.Sex
@@ -11,11 +11,6 @@ import com.fairybow.caloriediary.utilities.ZeroHourDate
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
-    private val database = CalorieDiary.database
-    private val biometricsDao = database.biometricsDao()
-    private val dayDao = database.dayDao()
-    private val preferencesDao = database.preferencesDao()
-
     val activityLevel = MutableLiveData<ActivityLevel>()
     val birthdate = MutableLiveData<ZeroHourDate>()
     val height = MutableLiveData<Double>()
@@ -27,14 +22,14 @@ class SharedViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            activityLevel.value = getDaoData { biometricsDao.getActivityLevel() }
-            birthdate.value = getDaoData { biometricsDao.getBirthdate() }
-            height.value = getDaoData { biometricsDao.getHeight() }
-            imperialWeight.value = getDaoData { preferencesDao.getImperialWeightType() }
-            kilograms.value = getDaoData { dayDao.getKilograms() }
-            sex.value = getDaoData { biometricsDao.getSex() }
-            useImperialHeight.value = getDaoData { preferencesDao.getUseImperialHeight() }
-            useImperialWeight.value = getDaoData { preferencesDao.getUseImperialWeight() }
+            activityLevel.value = getWithContext { repository.getActivityLevel() }
+            birthdate.value = getWithContext { repository.getBirthdate() }
+            height.value = getWithContext { repository.getHeight() }
+            imperialWeight.value = getWithContext { repository.getImperialWeightType() }
+            kilograms.value = getWithContext { repository.getKilograms() }
+            sex.value = getWithContext { repository.getSex() }
+            useImperialHeight.value = getWithContext { repository.getUseImperialHeight() }
+            useImperialWeight.value = getWithContext { repository.getUseImperialWeight() }
         }
     }
 
@@ -42,7 +37,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = activityLevel,
-            dataSetter = { biometricsDao.updateActivityLevel(it) },
+            dataSetter = { repository.setActivityLevel(it) },
             liveDataSetter = { this.activityLevel.value = activityLevel }
         )
     }
@@ -51,7 +46,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = birthdate,
-            dataSetter = { biometricsDao.updateBirthdate(it) },
+            dataSetter = { repository.setBirthdate(it) },
             liveDataSetter = { this.birthdate.value = birthdate }
         )
     }
@@ -60,7 +55,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = height,
-            dataSetter = { biometricsDao.updateHeight(it) },
+            dataSetter = { repository.setHeight(it) },
             liveDataSetter = { this.height.value = height }
         )
     }
@@ -69,7 +64,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = imperialWeight,
-            dataSetter = { preferencesDao.updateImperialWeightType(it) },
+            dataSetter = { repository.setImperialWeightType(it) },
             liveDataSetter = { this.imperialWeight.value = imperialWeight }
         )
     }
@@ -81,7 +76,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = kilograms,
-            dataSetter = { dayDao.updateKilograms(it) },
+            dataSetter = { repository.setKilograms(it) },
             liveDataSetter = { this.kilograms.value = kilograms }
         )
     }
@@ -90,7 +85,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = sex,
-            dataSetter = { biometricsDao.updateSex(it) },
+            dataSetter = { repository.setSex(it) },
             liveDataSetter = { this.sex.value = sex }
         )
     }
@@ -99,7 +94,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = useImperialHeight,
-            dataSetter = { preferencesDao.updateUseImperialHeight(it) },
+            dataSetter = { repository.setUseImperialHeight(it) },
             liveDataSetter = { this.useImperialHeight.value = useImperialHeight }
         )
     }
@@ -108,7 +103,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = useImperialWeight,
-            dataSetter = { preferencesDao.updateUseImperialWeight(it) },
+            dataSetter = { repository.setUseImperialWeight(it) },
             liveDataSetter = { this.useImperialWeight.value = useImperialWeight }
         )
     }

@@ -70,22 +70,22 @@ class SwitchBindingHelper(
     }
 }
 
-suspend fun <T> getDaoData(dataGetter: suspend () -> T): T {
+suspend fun <T> getWithContext(dataGetter: suspend () -> T): T {
     val value = withContext(Dispatchers.IO) {
         dataGetter()
     }
 
-    Logger.d("getDaoData: $value value retrieved")
+    Logger.d("getWithContext: $value value retrieved")
 
     return value
 }
 
-suspend fun <T> getNullableDaoData(dataGetter: suspend () -> T?): T? {
+suspend fun <T> getNullableWithContext(dataGetter: suspend () -> T?): T? {
     val value = withContext(Dispatchers.IO) {
         dataGetter()
     }
 
-    Logger.d("getNullableDaoData: $value value retrieved")
+    Logger.d("getNullableWithContext: $value value retrieved")
 
     return value
 }

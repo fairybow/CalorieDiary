@@ -6,25 +6,25 @@ import com.fairybow.caloriediary.data.BaseDao
 import com.fairybow.caloriediary.utilities.ZeroHourDate
 
 @Dao
-interface DayDao : BaseDao<DayTable> {
-    @Query("SELECT * FROM DayTable WHERE id = :id")
-    fun get(id: ZeroHourDate): DayTable?
+interface DayDao : BaseDao<DayTableRow> {
+    @Query("SELECT * FROM DayTableRow WHERE id = :id")
+    fun get(id: ZeroHourDate): DayTableRow?
 
-    @Query("SELECT * FROM DayTable")
-    fun getAll(): List<DayTable>
+    @Query("SELECT * FROM DayTableRow")
+    fun getAll(): List<DayTableRow>
 
-    @Query("SELECT * FROM DayTable WHERE id < :id ORDER BY id DESC LIMIT 1")
-    fun getDayPriorTo(id: ZeroHourDate): DayTable?
+    @Query("SELECT * FROM DayTableRow WHERE id < :id ORDER BY id DESC LIMIT 1")
+    fun getDayPriorTo(id: ZeroHourDate): DayTableRow?
 
-    @Query("SELECT kilograms FROM DayTable WHERE id = :id")
-    fun getKilograms(id: ZeroHourDate = ZeroHourDate()): Double
+    @Query("SELECT kilograms FROM DayTableRow WHERE id = :id")
+    fun getKilograms(id: ZeroHourDate): Double
 
-    @Query("UPDATE DayTable SET kilograms = :kilograms WHERE id = :id")
-    suspend fun updateKilograms(kilograms: Double, id: ZeroHourDate = ZeroHourDate())
+    @Query("UPDATE DayTableRow SET kilograms = :kilograms WHERE id = :id")
+    suspend fun updateKilograms(kilograms: Double, id: ZeroHourDate)
 
-    @Query("SELECT lastCheckInDate FROM DayTable WHERE id = :id")
-    fun getLastCheckInDate(id: ZeroHourDate = ZeroHourDate()): ZeroHourDate?
+    @Query("SELECT lastCheckInDate FROM DayTableRow WHERE id = :id")
+    fun getLastCheckInDate(id: ZeroHourDate): ZeroHourDate?
 
-    @Query("UPDATE DayTable SET lastCheckInDate = :lastCheckInDate WHERE id = :id")
-    suspend fun updateLastCheckInDate(lastCheckInDate: ZeroHourDate, id: ZeroHourDate = ZeroHourDate())
+    @Query("UPDATE DayTableRow SET lastCheckInDate = :lastCheckInDate WHERE id = :id")
+    suspend fun updateLastCheckInDate(lastCheckInDate: ZeroHourDate, id: ZeroHourDate)
 }
