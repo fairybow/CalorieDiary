@@ -1,4 +1,4 @@
-package com.fairybow.caloriediary.tools
+package com.fairybow.caloriediary.utilities
 
 import java.util.Calendar
 import java.util.Date
@@ -31,4 +31,16 @@ fun getCurrentAge(birthdate: Date): Int {
 
 fun getCurrentAge(birthdate: ZeroHourDate): Int {
     return getCurrentAge(birthdate.toDate())
+}
+
+fun today(): ZeroHourDate {
+    return ZeroHourDate()
+}
+
+fun tomorrow(): ZeroHourDate {
+    return ZeroHourDate(daysAway(1))
+}
+
+fun yesterday(): ZeroHourDate {
+    return ZeroHourDate(daysAway(-1))
 }

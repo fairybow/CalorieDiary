@@ -1,6 +1,4 @@
-package com.fairybow.caloriediary.tools
-
-import com.fairybow.caloriediary.data.ImperialWeight
+package com.fairybow.caloriediary.utilities
 
 fun imperialWeightType(countryCode: String): ImperialWeight? {
     return when {

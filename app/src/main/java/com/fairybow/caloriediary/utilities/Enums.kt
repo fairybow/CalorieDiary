@@ -1,7 +1,26 @@
-package com.fairybow.caloriediary.data
+package com.fairybow.caloriediary.utilities
 
 import androidx.room.TypeConverter
-import com.fairybow.caloriediary.tools.ZeroHourDate
+
+enum class ActivityLevel {
+    SEDENTARY,
+    LIGHTLY_ACTIVE,
+    MODERATELY_ACTIVE,
+    ACTIVE,
+    VERY_ACTIVE
+}
+
+enum class ImperialWeight {
+    POUNDS,
+    STONES,
+    STONES_AND_POUNDS
+}
+
+enum class Sex {
+    NOT_SET,
+    FEMALE,
+    MALE
+}
 
 class Converters {
     @TypeConverter

@@ -1,10 +1,10 @@
 package com.fairybow.caloriediary.ui.day
 
 import com.fairybow.caloriediary.databinding.FragmentDayBinding
-import com.fairybow.caloriediary.tools.UNIT_RATE_KC
-import com.fairybow.caloriediary.tools.getCurrentAge
-import com.fairybow.caloriediary.tools.mifflinStJeor
-import com.fairybow.caloriediary.tools.prettify
+import com.fairybow.caloriediary.utilities.UNIT_RATE_KC
+import com.fairybow.caloriediary.utilities.getCurrentAge
+import com.fairybow.caloriediary.utilities.mifflinStJeor
+import com.fairybow.caloriediary.utilities.prettify
 import com.fairybow.caloriediary.ui.BaseFragment
 import com.fairybow.caloriediary.ui.TextViewBindingHelper
 import kotlin.math.roundToInt
@@ -46,6 +46,13 @@ class DayFragment : BaseFragment<FragmentDayBinding, DayViewModel>(
             }
         }
 
-        addNavFab(binding.addFab)
+        addNavFab(
+            fab = binding.addFab,
+            action = {
+                /* TODO: show dialog with name entry and value entry options;
+                    when no name is entered, do not save to catalog, but add to Day;
+                    when name is entered, save to catalog and then also add a copy to Day */
+            }
+        )
     }
 }

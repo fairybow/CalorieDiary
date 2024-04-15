@@ -4,16 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fairybow.caloriediary.CalorieDiary
-import com.fairybow.caloriediary.data.ActivityLevel
-import com.fairybow.caloriediary.data.ImperialWeight
-import com.fairybow.caloriediary.data.Sex
-import com.fairybow.caloriediary.tools.ZeroHourDate
+import com.fairybow.caloriediary.utilities.ActivityLevel
+import com.fairybow.caloriediary.utilities.ImperialWeight
+import com.fairybow.caloriediary.utilities.Sex
+import com.fairybow.caloriediary.utilities.ZeroHourDate
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
-    private val biometricsDao = CalorieDiary.database.biometricsDao()
-    private val journalDao = CalorieDiary.database.journalDao()
-    private val preferencesDao = CalorieDiary.database.preferencesDao()
+    private val database = CalorieDiary.database
+    private val biometricsDao = database.biometricsDao()
+    private val dayDao = database.dayDao()
+    private val preferencesDao = database.preferencesDao()
 
     val activityLevel = MutableLiveData<ActivityLevel>()
     val birthdate = MutableLiveData<ZeroHourDate>()
@@ -29,8 +30,8 @@ class SharedViewModel : ViewModel() {
             activityLevel.value = getDaoData { biometricsDao.getActivityLevel() }
             birthdate.value = getDaoData { biometricsDao.getBirthdate() }
             height.value = getDaoData { biometricsDao.getHeight() }
-            imperialWeight.value = getDaoData { preferencesDao.getImperialWeight() }
-            kilograms.value = getDaoData { journalDao.getKilograms() }
+            imperialWeight.value = getDaoData { preferencesDao.getImperialWeightType() }
+            kilograms.value = getDaoData { dayDao.getKilograms() }
             sex.value = getDaoData { biometricsDao.getSex() }
             useImperialHeight.value = getDaoData { preferencesDao.getUseImperialHeight() }
             useImperialWeight.value = getDaoData { preferencesDao.getUseImperialWeight() }
@@ -68,7 +69,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = imperialWeight,
-            dataSetter = { preferencesDao.updateImperialWeight(it) },
+            dataSetter = { preferencesDao.updateImperialWeightType(it) },
             liveDataSetter = { this.imperialWeight.value = imperialWeight }
         )
     }
@@ -80,7 +81,7 @@ class SharedViewModel : ViewModel() {
         setDaoLiveData(
             scope = viewModelScope,
             value = kilograms,
-            dataSetter = { journalDao.updateKilograms(it) },
+            dataSetter = { dayDao.updateKilograms(it) },
             liveDataSetter = { this.kilograms.value = kilograms }
         )
     }

@@ -1,4 +1,4 @@
-package com.fairybow.caloriediary.tools
+package com.fairybow.caloriediary.utilities
 
 fun toCentimeters(inches: Double): Double {
     return inches * CM_IN_FACTOR

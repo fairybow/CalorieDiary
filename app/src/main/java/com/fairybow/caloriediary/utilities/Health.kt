@@ -1,7 +1,4 @@
-package com.fairybow.caloriediary.tools
-
-import com.fairybow.caloriediary.data.ActivityLevel
-import com.fairybow.caloriediary.data.Sex
+package com.fairybow.caloriediary.utilities
 
 fun mifflinStJeor(weight: Double?, height: Double?, age: Int?, sex: Sex?, activityLevel: ActivityLevel?): Double {
     if (weight == null || height == null || age == null || sex == null || activityLevel == null) {
@@ -23,7 +20,7 @@ fun mifflinStJeor(weight: Double?, height: Double?, age: Int?, sex: Sex?, activi
     return when (sex) {
         Sex.FEMALE -> formula(MSJ_F_ADJ)
         Sex.MALE -> formula(MSJ_M_ADJ)
-        Sex.NOT_SET -> (formula(MSJ_F_ADJ) + formula(MSJ_M_ADJ) / 2)
+        Sex.NOT_SET -> (formula(MSJ_F_ADJ) + formula(MSJ_M_ADJ)) / 2
     }
 }
 

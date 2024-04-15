@@ -1,4 +1,4 @@
-package com.fairybow.caloriediary.tools
+package com.fairybow.caloriediary.utilities
 
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
@@ -63,4 +63,10 @@ fun toOrdinatedString(int: Int): String {
 
 fun toProperCase(sentence: String): String {
     return sentence.split(" ").joinToString(" ") { capitalizeFirst(it) }
+}
+
+fun Enum<*>.toSentenceCaseString(): String {
+    val sentence = this.name.split("_").joinToString(" ") { it.lowercase() }
+
+    return capitalizeFirst(sentence)
 }

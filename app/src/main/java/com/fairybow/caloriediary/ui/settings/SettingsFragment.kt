@@ -8,11 +8,19 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import com.fairybow.caloriediary.R
-import com.fairybow.caloriediary.data.toSentenceCaseString
 import com.fairybow.caloriediary.databinding.FragmentSettingsBinding
-import com.fairybow.caloriediary.tools.ZeroHourDate
+import com.fairybow.caloriediary.utilities.ZeroHourDate
 import com.fairybow.caloriediary.debug.Logger
-import com.fairybow.caloriediary.tools.*
+import com.fairybow.caloriediary.utilities.epochYearsAway
+import com.fairybow.caloriediary.utilities.getCurrentAge
+import com.fairybow.caloriediary.utilities.prettyCentimeters
+import com.fairybow.caloriediary.utilities.prettyFeetInches
+import com.fairybow.caloriediary.utilities.toCentimeters
+import com.fairybow.caloriediary.utilities.toFeet
+import com.fairybow.caloriediary.utilities.toFeetInches
+import com.fairybow.caloriediary.utilities.toInchesFromFeet
+import com.fairybow.caloriediary.utilities.toProperCase
+import com.fairybow.caloriediary.utilities.toSentenceCaseString
 import com.fairybow.caloriediary.ui.BaseFragment
 import com.fairybow.caloriediary.ui.SwitchBindingHelper
 import com.fairybow.caloriediary.ui.TextViewBindingHelper
@@ -27,8 +35,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel
         preferencesGroup()
 
         addNavFab(
-            binding.catalogFab,
-            R.id.action_navigation_settings_to_navigation_catalog
+            fab = binding.catalogFab,
+            action = { navController.navigate(R.id.action_navigation_settings_to_navigation_catalog) }
         )
     }
 

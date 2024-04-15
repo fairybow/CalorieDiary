@@ -1,4 +1,4 @@
-package com.fairybow.caloriediary.tools
+package com.fairybow.caloriediary.utilities
 
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
@@ -103,20 +103,6 @@ class ZeroHourDate {
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
-        }
-    }
-
-    companion object {
-        fun yesterday(): ZeroHourDate {
-            return ZeroHourDate(daysAway(-1))
-        }
-
-        fun tomorrow(): ZeroHourDate {
-            return ZeroHourDate(daysAway(1))
-        }
-
-        fun today(): ZeroHourDate {
-            return ZeroHourDate()
         }
     }
 }

@@ -22,7 +22,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 ) : Fragment() {
     private var _binding: VB? = null
     protected val binding get() = _binding!! // Only valid between onCreateView & onDestroyView
-    private lateinit var navController: NavController
+    protected lateinit var navController: NavController
     protected lateinit var sharedViewModel: SharedViewModel
     protected lateinit var viewModel: VM
 
@@ -60,7 +60,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         _binding = null
     }
 
-    fun addNavFab(fab: FloatingActionButton, rId: Int? = null) {
+    fun addNavFab(fab: FloatingActionButton, action: (() -> Unit)? = null) {
         val layoutParams = fab.layoutParams as CoordinatorLayout.LayoutParams
         val margin = 80
 
@@ -74,9 +74,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
 
         fab.layoutParams = layoutParams
 
-        if (rId != null) {
+        if (action != null) {
             fab.setOnClickListener {
-                navController.navigate(rId)
+                action()
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.fairybow.caloriediary.tools
+package com.fairybow.caloriediary.utilities
 
 const val CM_IN_FACTOR = 2.54
 const val FEET_IN_FACTOR = 12.0
